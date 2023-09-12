@@ -39,7 +39,26 @@ while (driver.title == "UW NetID sign-in"):
 
 print("We're free! Time to actually do the class signup!")
 
-# Selecting the table where we mark classes DROP
+# Grabbing both tables
+tables = driver.find_elements(By.CLASS_NAME, "sps_table update")
+
+# the 0th table is our "drops" list, we're looking through its body
+drops_table = tables[0].find_element(By.TAG_NAME, "tbody")
+
+# iterate through each ROW in the body
+for row in drops_table.find_elements(By.TAG_NAME, "tr"):
+    # TODO: handle the header rows (we'll do this with a try -> catch)
+    try:
+        # sketchy line, let's see if this works
+        sln_input = row.find_element(By.CSS_SELECTOR, "input[name^='sln']")
+        print(sln_input.value)
+    except NoSuchElementException:
+        continue
+    # if the SLN matches the provided SLNs
+        # click the checkbox
+
+# the 1st table is our sln entry form
+
 # drops_table = driver.find_element_by_css_selector("table.sps_table update")
 # for row in drops_table.find_elements_by_css_selector("tr"):
 #     for cell in row.find_elements_by_css_selector("input"):
